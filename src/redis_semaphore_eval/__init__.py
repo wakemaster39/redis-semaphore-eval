@@ -1,7 +1,7 @@
 import uuid
 from contextlib import contextmanager
 from datetime import datetime
-from typing import Optional
+from typing import Optional, cast, Generator
 
 from redis import Redis
 from redis.client import Script
@@ -97,11 +97,13 @@ def consumed_locks(
     redis: Redis,
     key: str,
 ) -> int:
-    return CONSUMED_LOCKS_SCRIPT(keys=[key], args=[], client=redis)
+    return cast(int, CONSUMED_LOCKS_SCRIPT(keys=[key], args=[], client=redis))
 
 
 @contextmanager
-def semaphore(redis: Redis, key: str, limit: int, expire_in: int = 60, blocking: bool = True):
+def semaphore(
+    redis: Redis, key: str, limit: int, expire_in: int = 60, blocking: bool = True
+) -> Generator[None, None, None]:
     lock_id = acquire_lock(redis, key, limit, expire_in)
     if lock_id is None and blocking:
         pass
@@ -110,4 +112,4 @@ def semaphore(redis: Redis, key: str, limit: int, expire_in: int = 60, blocking:
     try:
         yield
     finally:
-        clear_lock(redis, key, lock_id)
+        clear_lock(redis, key, lock_id)  # type: ignore

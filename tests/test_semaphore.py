@@ -1,3 +1,5 @@
+from typing import Generator, cast
+
 import pytest
 from redis import Redis
 
@@ -15,7 +17,7 @@ def signal_key() -> str:
 
 
 @pytest.fixture()
-def redis(key: str, signal_key: str) -> Redis:
+def redis(key: str, signal_key: str) -> Generator[Redis, None, None]:
     r = Redis(host="localhost", port=6379, db=0)
     yield r
     r.delete(key)
@@ -40,7 +42,7 @@ class TestAcquireLock:
             key,
             {"qq": 0, "qq2": 0},
         )
-        lock = acquire_lock(redis, key=key, signal_key=signal_key, limit=2, expire_in=5)
+        lock = cast(str, acquire_lock(redis, key=key, signal_key=signal_key, limit=2, expire_in=5))
 
         assert redis.zrangebyscore(key, "-inf", "inf") == [lock.encode("utf-8")]
 
@@ -55,7 +57,7 @@ class TestAcquireLock:
 
 class TestExtendLock:
     def test_returns_true_if_extended_lock(self, redis: Redis, key: str) -> None:
-        lock_id = acquire_lock(redis, key=key, limit=2, expire_in=10)
+        lock_id = cast(str, acquire_lock(redis, key=key, limit=2, expire_in=10))
         assert extend_lock(redis, lock_id=lock_id, key=key, expire_in=10)
 
     def test_returns_false_if_lock_was_expired(self, redis: Redis, key: str) -> None:
@@ -71,7 +73,7 @@ class TestClearLock:
         clear_lock(redis, key, "qq")
 
     def test_removes_lock(self, redis: Redis, key: str) -> None:
-        lock_id = acquire_lock(redis, key=key, limit=2, expire_in=10)
+        lock_id = cast(str, acquire_lock(redis, key=key, limit=2, expire_in=10))
         clear_lock(redis, key, lock_id)
         assert redis.zrank(key, lock_id) is None
 
@@ -80,7 +82,7 @@ class TestConsumedLocks:
     def test_returns_consumed_locks(self, redis: Redis, key: str) -> None:
         acquire_lock(redis, key=key, limit=2, expire_in=5)
         assert consumed_locks(redis, key=key) == 1
-        lock_id = acquire_lock(redis, key=key, limit=2, expire_in=5)
+        lock_id = cast(str, acquire_lock(redis, key=key, limit=2, expire_in=5))
         assert consumed_locks(redis, key=key) == 2
         clear_lock(redis, key, lock_id)
         assert consumed_locks(redis, key=key) == 1
