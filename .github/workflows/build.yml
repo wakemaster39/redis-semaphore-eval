@@ -21,6 +21,10 @@ jobs:
           poetry-version: 1.1.4
       - name: poetry install
         run: poetry install
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.2.0
+        with:
+          redis-version: 6.2.0
       - name: pytest
         run: poetry run python -m pytest --cov ./src --cov-report term-missing
 
