@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "redis-semaphore-eval"
-version = "0.1.0"
+version = "0.1.2"
 description = "A redis semaphore implementation using eval scripts"
 authors = ["Cameron HUrst <cameron.a.hurst@gmail.com>"]
 license = "MIT"

@@ -6,8 +6,6 @@
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/redis-semaphore-eval.svg)](https://pypi.org/project/redis-semaphore-eval/)
 [![Pyversions](https://img.shields.io/pypi/pyversions/redis-semaphore-eval.svg)](https://pypi.org/project/redis-semaphore-eval/)
 
-_Fastbin_ is a drop in replacement of [pycasbin](https://github.com/casbin/pycasbin) the python implementation of the
-
 
 
 ## Contributing
