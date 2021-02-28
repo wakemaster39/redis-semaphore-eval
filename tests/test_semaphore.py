@@ -35,6 +35,15 @@ class TestAcquireLock:
         with pytest.raises(InvalidExpiry):
             acquire_lock(redis, key=key, signal_key=signal_key, limit=2, expire_in=-1)
 
+    def test_purges_expired_keys(self, redis: Redis, key: str, signal_key: str) -> None:
+        redis.zadd(
+            key,
+            {"qq": 0, "qq2": 0},
+        )
+        lock = acquire_lock(redis, key=key, signal_key=signal_key, limit=2, expire_in=5)
+
+        assert redis.zrangebyscore(key, "-inf", "inf") == [lock.encode("utf-8")]
+
     def test_pushes_to_signal_key_for_each_expired_key(self, redis: Redis, key: str, signal_key: str) -> None:
         redis.zadd(
             key,

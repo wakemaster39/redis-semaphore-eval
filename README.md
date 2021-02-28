@@ -1,4 +1,4 @@
-#Redis Semaphore Eval
+# Redis Semaphore Eval
 
 [![codecov](https://codecov.io/gh/wakemaster39/fastbin/branch/master/graph/badge.svg?token=H9WAVWZ7YY)](undefined)
 [![Actions Status](https://github.com/wakemaster39/fastbin/workflows/Tests/badge.svg)](https://github.comwakemaster39/fastbin/actions)
