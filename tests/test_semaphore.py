@@ -3,7 +3,7 @@ from typing import Generator, cast
 import pytest
 from redis import Redis
 
-from redis_semaphore_eval import acquire_lock, extend_lock, clear_lock, consumed_locks, InvalidExpiry
+from redis_semaphore_eval import InvalidExpiry, acquire_lock, clear_lock, consumed_locks, extend_lock
 
 
 @pytest.fixture()

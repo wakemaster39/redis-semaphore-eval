@@ -1,7 +1,6 @@
 import uuid
 from contextlib import contextmanager
-from datetime import datetime
-from typing import Optional, cast, Generator
+from typing import Generator, Optional, cast
 
 from redis import Redis
 from redis.client import Script
@@ -15,9 +14,9 @@ class InvalidExpiry(Exception):
     pass
 
 
-# ARGV[1] = id
-# ARGV[2] = semaphore limit
-# ARGV[3] = expiry in seconds
+# ARGV[1] = id  # noqa: E800
+# ARGV[2] = semaphore limit # noqa: E800
+# ARGV[3] = expiry in seconds # noqa: E800
 ACQUIRE_LOCK_SCRIPT = Script(
     None,
     b"""
@@ -38,8 +37,8 @@ end
 """,
 )
 
-# ARGV[1] = id
-# ARGV[2] = expiry in seconds
+# ARGV[1] = id # noqa: E800
+# ARGV[2] = expiry in seconds # noqa: E800
 EXTEND_LOCK_SCRIPT = Script(
     None,
     b"""

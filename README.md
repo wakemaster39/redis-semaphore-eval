@@ -13,5 +13,5 @@ _Fastbin_ is a drop in replacement of [pycasbin](https://github.com/casbin/pycas
 ## Contributing
 
 ```
-poetry run pre-commit install -t pre-commit -t commit-msg && poetry run pre-commit autoupdate && poetry run pre-commit run --all
+poetry run pre-commit install -t pre-commit -t commit-msg && poetry run pre-commit run --all
 ```
