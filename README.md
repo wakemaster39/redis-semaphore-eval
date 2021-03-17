@@ -27,7 +27,14 @@ from redis_semaphore_eval import auto_renewing_semaphore
 
 redis = Redis(host="localhost", port=6379, db=0)
 key = "unique_lock_key"
-with auto_renewing_semaphore(redis, key=key, limit=2, expire_in=5, timeout=1, auto_renewal_interval=4) as lock_id:
+with auto_renewing_semaphore(
+    redis,
+    key=key,
+    limit=2,
+    expire_in=5,
+    timeout=1,
+    auto_renewal_interval=4
+) as lock_id:
     ...
 ```
 
