@@ -6,10 +6,13 @@
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/redis-semaphore-eval.svg)](https://pypi.org/project/redis-semaphore-eval/)
 [![Pyversions](https://img.shields.io/pypi/pyversions/redis-semaphore-eval.svg)](https://pypi.org/project/redis-semaphore-eval/)
 
-
+https://redislabs.com/ebook/part-2-core-concepts/chapter-6-application-components-in-redis/6-3-counting-semaphores/
 
 ## Contributing
 
 ```
 poetry run pre-commit install -t pre-commit -t commit-msg && poetry run pre-commit run --all
+docker-compose up -d
+poetry run python -m pytest
+docker-compose down
 ```
