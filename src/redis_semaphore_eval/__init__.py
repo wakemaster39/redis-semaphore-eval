@@ -146,7 +146,7 @@ def semaphore(
     lock_id = acquire_lock(redis, key=key, signal_key=signal_key, limit=limit, expire_in=expire_in)
 
     if lock_id is None and blocking:
-        if not redis.blpop(signal_key, timeout):
+        if redis.blpop(signal_key, timeout):
             lock_id = acquire_lock(redis, key=key, signal_key=signal_key, limit=limit, expire_in=expire_in)
 
     if lock_id is None:
